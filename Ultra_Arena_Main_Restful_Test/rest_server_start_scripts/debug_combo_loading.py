@@ -13,12 +13,12 @@ def main():
     print("🔍 Checking combo configuration loading...")
     print("="*60)
     
-    # Check combo_test_8_strategies
-    if "combo_test_8_strategies" in combo_config:
-        combo = combo_config["combo_test_8_strategies"]
+    # Check combo_test_10_strategies
+    if "combo_test_10_strategies" in combo_config:
+        combo = combo_config["combo_test_10_strategies"]
         strategy_groups = combo.get("strategy_groups", [])
         
-        print(f"✅ combo_test_8_strategies found")
+        print(f"✅ combo_test_10_strategies found")
         print(f"📊 Number of strategy groups: {len(strategy_groups)}")
         print(f"📋 Strategy groups:")
         for i, group in enumerate(strategy_groups, 1):
@@ -32,7 +32,7 @@ def main():
             print(f"✅ No direct file deepseek strategies found")
             
     else:
-        print(f"❌ combo_test_8_strategies NOT found in combo_config")
+        print(f"❌ combo_test_10_strategies NOT found in combo_config")
 
 if __name__ == "__main__":
     main()

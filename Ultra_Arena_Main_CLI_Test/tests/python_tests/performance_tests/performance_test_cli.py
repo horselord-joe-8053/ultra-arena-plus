@@ -58,7 +58,7 @@ def run_cli_performance_test(file_count: int):
         "python", "main.py",
         "--profile", "default_profile_base",
         "--input", input_path,  # Use specific input path instead of test-profile
-        "--combo", "combo_test_8_strategies",
+        "--combo", "combo_test_10_strategies",
         "--benchmark-eval-mode",
         "--benchmark-file", str(paths['benchmark_file_path']),
         "--streaming",

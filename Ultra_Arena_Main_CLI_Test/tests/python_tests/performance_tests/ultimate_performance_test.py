@@ -74,7 +74,7 @@ def run_ultimate_performance_test(file_count: int) -> Dict[str, Any]:
         "python", "cli_with_detailed_monitoring.py",
         "--profile", "default_profile_base",
         "--input", isolated_input_dir,
-        "--combo", "combo_test_8_strategies",
+        "--combo", "combo_test_10_strategies",
         "--benchmark-eval-mode",
         "--benchmark-file", str(paths['benchmark_file_path']),
         "--streaming",

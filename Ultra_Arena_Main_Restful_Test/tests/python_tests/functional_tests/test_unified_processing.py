@@ -73,7 +73,7 @@ def test_minimal_combo_processing():
     
     # Minimal data for combo processing
     data = {
-        "combo_name": "combo_test_8_strategies",
+        "combo_name": "combo_test_10_strategies",
         "input_pdf_dir_path": paths["input_pdf_dir_path"],
             "output_dir": paths["output_dir"]
     }
@@ -136,7 +136,7 @@ def test_maximum_combo_processing():
     
     # Maximum data for combo processing
     data = {
-        "combo_name": "combo_test_8_strategies",
+        "combo_name": "combo_test_10_strategies",
         "input_pdf_dir_path": paths["input_pdf_dir_path"],
         "output_dir": paths["output_dir"],
         "run_type": "normal",  # Optional: defaults to "normal"
@@ -262,7 +262,7 @@ def test_unified_parameter_structure():
     
     # Test combo processing with unified structure (add combo_name)
     combo_data = unified_data.copy()
-    combo_data["combo_name"] = "combo_test_8_strategies"
+    combo_data["combo_name"] = "combo_test_10_strategies"
     
     print(f"📤 Testing combo processing with unified structure...")
     combo_result = send_request_and_validate("/api/process/combo", combo_data, "unified structure combo")

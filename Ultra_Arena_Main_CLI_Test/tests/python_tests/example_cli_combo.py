@@ -50,7 +50,7 @@ def run_combo_cli_example():
         "python", "main.py",
         "--profile", "default_profile_base",
         "--test-profile", "default_fixture",
-        "--combo", "combo_test_8_strategies",  # Specific combo
+        "--combo", "combo_test_10_strategies",  # Specific combo
         "--benchmark-eval-mode",  # Enable benchmark evaluation
         "--benchmark-file", str(paths['benchmark_file_path']),  # Benchmark file
         "--streaming",  # Enable streaming mode

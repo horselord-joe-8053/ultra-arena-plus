@@ -30,7 +30,7 @@ def main():
     paths = get_test_profile_paths("default_fixture")
     
     data = {
-        "combo_name": "combo_test_8_strategies",
+        "combo_name": "combo_test_10_strategies",
         "input_pdf_dir_path": paths["input_pdf_dir_path"],
         "output_dir": paths["output_dir"],
         "run_type": "evaluation",
