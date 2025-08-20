@@ -47,22 +47,7 @@ combo_config = {
         ]
     },    
  
-    "combo_test_8_strategies_13f" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para",
-            "grp_imageF_google_gemini25_para",
-            "grp_textF_google_gemini25_para",
-            # "grp_directF_dSeek_dChat_para", # WARNING - no support for direct pdf file
-            # "grp_imageF_dSeek_dChat_para", #    WARNING - Unsupported file type: temp_images/image_5eb95081.png
-            "grp_textF_dSeek_dChat_para",
-            "grp_test_imageF_openai_para",
-            "grp_test_imageF_claude_para",
-            "grp_test_textF_claude_para",
-            "grp_imageF_togetherai_llama_4_17b_para",
-            "grp_imageF_togetherai_llama_vision_90b_para",
-            "grp_imageF_grok_2_para"
-        ]
-    },
+
     "combo_test_8_strategies_252f" : {
         "strategy_groups" : [
             "grp_directF_google_gemini25_para",
@@ -113,27 +98,10 @@ combo_config = {
             "grp_test_imageF_openai_para",
         ]
     },    
-    "combo_test_imageF_claude_strategies" : {
-        "strategy_groups" : [
-            "grp_test_imageF_claude_para",
-            # "grp_textF_dSeek_dChat_para", # no longer bad, after fixing ""list indices must be integers or slices, not str""
-        ]
-    },
+
     "combo_test_google_imageF_strategies_1f" : {
         "strategy_groups" : [
             "grp_imageF_google_gemini25_para"
-        ]
-    },
-    "combo_test_google_imageF_strategies_4f" : {
-        "strategy_groups" : [
-            "grp_imageF_google_gemini25_para"
-        ]
-    },
-    "combo_test_imageF_google_strategies" : {
-        "strategy_groups" : [
-            # "grp_textF_google_gemini25_para",
-            # "grp_directF_google_gemini25_para",
-            "grp_imageF_google_gemini25_para", 
         ]
     }, 
     "combo_test_bad_strategies" : {
@@ -156,25 +124,10 @@ combo_config = {
             "grp_imageF_google_gemini25_para", 
         ]
     }, 
-    "combo_test_google_directF_strategies_13f" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para"
-        ]
-    },
-    "combo_test_google_directF_strategies_30f" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para"
-        ]
-    },    
     "combo_test_google_directF_strategies_4f" : {
         "strategy_groups" : [
             "grp_directF_google_gemini25_para",
             "grp_textF_dSeek_dChat_para"
-        ]
-    },
-    "combo_test_google_directF_strategies_1f" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para"
         ]
     },
     "combo_test_claude_strategies" : {
@@ -202,43 +155,22 @@ combo_config = {
             # "grp_directF_dSeek_dChat_para", # WARNING - no support for direct pdf file
         ]
     },
-    "test_textF_dSeek_dChat_only" : {
-        "strategy_groups" : [
-            "grp_textF_dSeek_dChat_para"
-        ]
-    },  
+  
     # "test_imageF_dSeek_dChat_only" : {
     #     "input_files" : DIR_1_FILES,
     #     "strategy_groups" : [
     #         "grp_imageF_dSeek_dChat_para"
     #     ]
     # },        
-    "test_imageF_openai_only" : {
-        "strategy_groups" : [
-            "grp_test_imageF_openai_para"
-        ]
-    },
+
     "test_textF_openai_only" : {
         "strategy_groups" : [
             "grp_test_textF_openai_para"
         ]
     },
-    "test_imageF_claude_only" : {
-        "strategy_groups" : [
-            "grp_test_imageF_claude_para"
-        ]
-    },
-    "test_textF_claude_only" : {
-        "strategy_groups" : [
-            "grp_test_textF_claude_para"
-        ]
-    },
-    "test_both_strategies_claude" : {
-        "strategy_groups" : [
-            "grp_test_imageF_claude_para",
-            "grp_test_textF_claude_para"
-        ]
-    },
+
+
+
     "test_both_strategies_openai" : {
         "strategy_groups" : [
             "grp_test_imageF_openai_para",
@@ -302,36 +234,20 @@ combo_config = {
     },
     
     # Additional single-strategy combos for common use cases
-    "single_strategy_direct_file_google" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para"
-        ]
-    },
+
     # "single_strategy_direct_file_deepseek" : {
     #     "strategy_groups" : [
     #         # "grp_directF_dSeek_dChat_para", # WARNING - no support for direct pdf file
     #     ]
     # },
-    "single_strategy_text_first_deepseek" : {
-        "strategy_groups" : [
-            "grp_textF_dSeek_dChat_para"
-        ]
-    },
+
     "single_strategy_text_first_google" : {
         "strategy_groups" : [
             "grp_textF_google_gemini25_para"
         ]
     },
-    "single_strategy_text_first_claude" : {
-        "strategy_groups" : [
-            "grp_test_textF_claude_para"
-        ]
-    },
-    "single_strategy_image_first_openai" : {
-        "strategy_groups" : [
-            "grp_test_imageF_openai_para"
-        ]
-    },
+
+
     "single_strategy_image_first_claude" : {
         "strategy_groups" : [
             "grp_test_imageF_claude_para"
