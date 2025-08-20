@@ -44,7 +44,7 @@ class AsyncTaskManager:
         num_strategies = len(request_data.get('strategy_groups', [])) if 'strategy_groups' in request_data else 0
         
         # If we don't have the data yet, we'll calculate it during processing
-        total_work_units = num_files * num_strategies if num_files > 0 and num_strategies > 0 else 0
+        total_files_of_all_strategies_to_process = num_files * num_strategies if num_files > 0 and num_strategies > 0 else 0
         
         # Create task record
         task_info = {
@@ -53,8 +53,8 @@ class AsyncTaskManager:
             "created_at": datetime.utcnow().isoformat() + "Z",
             "request_data": request_data,
             "progress": 0,
-            "total_work_units": total_work_units,
-            "completed_work_units": 0,
+            "total_files_of_all_strategies_to_process": total_files_of_all_strategies_to_process,
+            "total_files_of_all_strategies_processed": 0,
             "result": None,
             "error": None
         }
@@ -110,21 +110,21 @@ class AsyncTaskManager:
                         num_files = len(pdf_files)
                         
                         # Update total work units
-                        total_work_units = num_files * num_strategies
+                        total_files_of_all_strategies_to_process = num_files * num_strategies
                         with self.task_lock:
-                            self.tasks[request_id]["total_work_units"] = total_work_units
+                            self.tasks[request_id]["total_files_of_all_strategies_to_process"] = total_files_of_all_strategies_to_process
                         
-                        logger.info(f"📊 Calculated total work units: {num_files} files × {num_strategies} strategies = {total_work_units}")
+                        logger.info(f"📊 Calculated total files of all strategies to process: {num_files} files × {num_strategies} strategies = {total_files_of_all_strategies_to_process}")
                     else:
                         logger.warning(f"⚠️ Input path does not exist: {input_path}")
-                        total_work_units = 0
+                        total_files_of_all_strategies_to_process = 0
                 else:
                     logger.warning(f"⚠️ Combo not found: {combo_name}")
-                    total_work_units = 0
+                    total_files_of_all_strategies_to_process = 0
                     
             except Exception as e:
-                logger.warning(f"⚠️ Could not calculate total work units: {e}")
-                total_work_units = 0
+                logger.warning(f"⚠️ Could not calculate total files of all strategies to process: {e}")
+                total_files_of_all_strategies_to_process = 0
             
             # Execute the processing
             result_code = main_modular_processing(
@@ -142,14 +142,14 @@ class AsyncTaskManager:
             # Calculate final progress based on actual completion
             # For now, we'll assume completion, but in a real implementation,
             # we'd track actual progress during processing
-            completed_work_units = total_work_units if total_work_units > 0 else 1
-            progress = 100 if total_work_units > 0 else 100
+            total_files_of_all_strategies_processed = total_files_of_all_strategies_to_process if total_files_of_all_strategies_to_process > 0 else 1
+            progress = 100 if total_files_of_all_strategies_to_process > 0 else 100
             
             # Update task with results
             with self.task_lock:
                 self.tasks[request_id]["status"] = "complete" if progress >= 100 else "incomplete"
                 self.tasks[request_id]["progress"] = progress
-                self.tasks[request_id]["completed_work_units"] = completed_work_units
+                self.tasks[request_id]["total_files_of_all_strategies_processed"] = total_files_of_all_strategies_processed
                 self.tasks[request_id]["result"] = result_code
                 self.tasks[request_id]["completed_at"] = datetime.utcnow().isoformat() + "Z"
             

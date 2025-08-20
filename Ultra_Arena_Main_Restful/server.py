@@ -246,8 +246,8 @@ def get_request_status(request_id):
                 "created_at": request_info["created_at"],
                 "completed_at": request_info["completed_at"],
                 "progress": request_info["progress"],
-                "total_work_units": request_info.get("total_work_units", 0),
-                "completed_work_units": request_info.get("completed_work_units", 0),
+                "total_files_of_all_strategies_to_process": request_info.get("total_files_of_all_strategies_to_process", 0),
+                "total_files_of_all_strategies_processed": request_info.get("total_files_of_all_strategies_processed", 0),
                 "performance": {
                     "configuration_assembly_time_ms": 45.2,  # This would come from actual processing
                     "server_config_cached": True
@@ -261,8 +261,8 @@ def get_request_status(request_id):
                 "request_id": request_id,
                 "created_at": request_info["created_at"],
                 "progress": request_info["progress"],
-                "total_work_units": request_info.get("total_work_units", 0),
-                "completed_work_units": request_info.get("completed_work_units", 0)
+                "total_files_of_all_strategies_to_process": request_info.get("total_files_of_all_strategies_to_process", 0),
+                "total_files_of_all_strategies_processed": request_info.get("total_files_of_all_strategies_processed", 0)
             }
         elif request_info["status"] == "failed":
             # Include error for failed requests
@@ -281,8 +281,8 @@ def get_request_status(request_id):
                 "request_id": request_id,
                 "created_at": request_info["created_at"],
                 "progress": request_info["progress"],
-                "total_work_units": request_info.get("total_work_units", 0),
-                "completed_work_units": request_info.get("completed_work_units", 0)
+                "total_files_of_all_strategies_to_process": request_info.get("total_files_of_all_strategies_to_process", 0),
+                "total_files_of_all_strategies_processed": request_info.get("total_files_of_all_strategies_processed", 0)
             }
         
         return jsonify(response_data)
