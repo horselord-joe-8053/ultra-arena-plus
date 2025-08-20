@@ -3,7 +3,6 @@
 🚀 Unified Processing Test Suite for Ultra Arena API
 
 This test file showcases comprehensive test cases for both endpoints:
-- /api/process (simple processing)
 - /api/process/combo (combo processing)
 
 Test Coverage:
@@ -34,29 +33,7 @@ TEST_PROFILE = "default_fixture"
 # MINIMAL PARAMETER TEST CASES
 # =============================================================================
 
-def test_minimal_simple_processing():
-    """Test 1: Minimal parameters for simple processing"""
-    print("\n" + "="*60)
-    print("🧪 TEST 1: MINIMAL SIMPLE PROCESSING")
-    print("="*60)
-    print("📋 Testing /api/process with minimal parameters:")
-    print("   - input_pdf_dir_path (required)")
-    print("   - output_dir (required)")
-    print("   - All other parameters use defaults")
-    
-    paths = get_test_profile_paths(TEST_PROFILE)
-    
-    # Minimal data for simple processing
-    data = {
-        "input_pdf_dir_path": paths["input_pdf_dir_path"],
-        "output_dir": paths["output_dir"]
-    }
-    
-    print(f"📤 Sending minimal simple processing request...")
-    print(f"   Input: {data['input_pdf_dir_path']}")
-    print(f"   Output: {data['output_dir']}")
-    
-    return send_request_and_validate("/api/process", data, "minimal simple processing")
+
 
 def test_minimal_combo_processing():
     """Test 2: Minimal parameters for combo processing"""
@@ -89,38 +66,7 @@ def test_minimal_combo_processing():
 # MAXIMUM PARAMETER TEST CASES
 # =============================================================================
 
-def test_maximum_simple_processing():
-    """Test 3: Maximum parameters for simple processing"""
-    print("\n" + "="*60)
-    print("🧪 TEST 3: MAXIMUM SIMPLE PROCESSING")
-    print("="*60)
-    print("📋 Testing /api/process with all parameters:")
-    print("   - All required parameters")
-    print("   - All optional parameters with custom values")
-    print("   - Normal processing mode")
-    
-    paths = get_test_profile_paths(TEST_PROFILE)
-    
-    # Maximum data for simple processing
-    data = {
-        "input_pdf_dir_path": paths["input_pdf_dir_path"],
-        "output_dir": paths["output_dir"],
-        "run_type": "normal",  # Optional: defaults to "normal"
-        "streaming": True,  # Optional: defaults to config DEFAULT_STREAMING
-        "max_cc_strategies": 5,  # Optional: defaults to config DEFAULT_MAX_CC_STRATEGIES (overridden to 1)
-        "max_cc_filegroups": 3,  # Optional: defaults to config DEFAULT_MAX_CC_FILEGROUPS
-        "max_files_per_request": 20  # Optional: defaults to config DEFAULT_MAX_FILES_PER_REQUEST
-    }
-    
-    print(f"📤 Sending maximum simple processing request...")
-    print(f"   Input: {data['input_pdf_dir_path']}")
-    print(f"   Output: {data['output_dir']}")
-    print(f"   Streaming: {data['streaming']}")
-    print(f"   Max CC Strategies: {data['max_cc_strategies']} (will be overridden to 1)")
-    print(f"   Max CC Filegroups: {data['max_cc_filegroups']}")
-    print(f"   Max Files Per Request: {data['max_files_per_request']}")
-    
-    return send_request_and_validate("/api/process", data, "maximum simple processing")
+
 
 def test_maximum_combo_processing():
     """Test 4: Maximum parameters for combo processing"""
@@ -161,38 +107,7 @@ def test_maximum_combo_processing():
 # EVALUATION MODE TEST CASES
 # =============================================================================
 
-def test_evaluation_simple_processing():
-    """Test 5: Evaluation mode for simple processing"""
-    print("\n" + "="*60)
-    print("🧪 TEST 5: EVALUATION SIMPLE PROCESSING")
-    print("="*60)
-    print("📋 Testing /api/process in evaluation mode:")
-    print("   - run_type: 'evaluation'")
-    print("   - benchmark_file_path (required for evaluation)")
-    print("   - All other parameters")
-    
-    paths = get_test_profile_paths(TEST_PROFILE)
-    
-    # Evaluation mode data for simple processing
-    data = {
-        "input_pdf_dir_path": paths["input_pdf_dir_path"],
-        "output_dir": paths["output_dir"],
-        "run_type": "evaluation",  # Optional: defaults to "normal"
-        "benchmark_file_path": paths["benchmark_file_path"],  # Required for evaluation mode
-        "streaming": False,  # Optional: defaults to config DEFAULT_STREAMING
-        "max_cc_strategies": 3,  # Optional: defaults to config DEFAULT_MAX_CC_STRATEGIES (overridden to 1)
-        "max_cc_filegroups": 2,  # Optional: defaults to config DEFAULT_MAX_CC_FILEGROUPS
-        "max_files_per_request": 15  # Optional: defaults to config DEFAULT_MAX_FILES_PER_REQUEST
-    }
-    
-    print(f"📤 Sending evaluation simple processing request...")
-    print(f"   Input: {data['input_pdf_dir_path']}")
-    print(f"   Output: {data['output_dir']}")
-    print(f"   Benchmark: {data['benchmark_file_path']}")
-    print(f"   Run Type: {data['run_type']}")
-    print(f"   Streaming: {data['streaming']}")
-    
-    return send_request_and_validate("/api/process", data, "evaluation simple processing")
+
 
 def test_evaluation_combo_processing():
     """Test 6: Evaluation mode for combo processing"""
@@ -256,10 +171,6 @@ def test_unified_parameter_structure():
         "max_files_per_request": 10
     }
     
-    # Test simple processing with unified structure
-    print(f"📤 Testing simple processing with unified structure...")
-    simple_result = send_request_and_validate("/api/process", unified_data, "unified structure simple")
-    
     # Test combo processing with unified structure (add combo_name)
     combo_data = unified_data.copy()
     combo_data["combo_name"] = "combo_test_10_strategies"
@@ -267,7 +178,7 @@ def test_unified_parameter_structure():
     print(f"📤 Testing combo processing with unified structure...")
     combo_result = send_request_and_validate("/api/process/combo", combo_data, "unified structure combo")
     
-    return simple_result and combo_result
+    return combo_result
 
 # =============================================================================
 # ERROR HANDLING TEST CASES
@@ -286,15 +197,7 @@ def test_error_handling():
     
     results = []
     
-    # Test 8a: Missing required parameters (simple)
-    print("\n🔍 Test 8a: Missing required parameters (simple)")
-    data_missing_simple = {
-        "input_pdf_dir_path": "/tmp/test_input"
-        # Missing output_dir
-    }
-    results.append(send_request_and_validate("/api/process", data_missing_simple, "missing required simple", expect_error=True))
-    
-    # Test 8b: Missing required parameters (combo)
+    # Test 8a: Missing required parameters (combo)
     print("\n🔍 Test 8b: Missing required parameters (combo)")
     data_missing_combo = {
         "combo_name": "combo1",
@@ -303,13 +206,7 @@ def test_error_handling():
     }
     results.append(send_request_and_validate("/api/process/combo", data_missing_combo, "missing required combo", expect_error=True))
     
-    # Test 8c: Invalid input path
-    print("\n🔍 Test 8c: Invalid input path")
-    data_invalid_path = {
-        "input_pdf_dir_path": "/nonexistent/path",
-        "output_dir": "/tmp/test_output"
-    }
-    results.append(send_request_and_validate("/api/process", data_invalid_path, "invalid input path", expect_error=True))
+
     
     # Test 8d: Invalid combo name
     print("\n🔍 Test 8d: Invalid combo name")
@@ -320,9 +217,8 @@ def test_error_handling():
     }
     results.append(send_request_and_validate("/api/process/combo", data_invalid_combo, "invalid combo name", expect_error=True))
     
-    # Test 8e: Empty JSON
-    print("\n🔍 Test 8e: Empty JSON")
-    results.append(send_request_and_validate("/api/process", {}, "empty JSON simple", expect_error=True))
+    # Test 8c: Empty JSON
+    print("\n🔍 Test 8c: Empty JSON")
     results.append(send_request_and_validate("/api/process/combo", {}, "empty JSON combo", expect_error=True))
     
     return all(results)
@@ -381,7 +277,7 @@ def send_request_and_validate(endpoint, data, test_name, expect_error=False):
 def main():
     """Main test function"""
     print("🚀 Starting Unified Processing Test Suite...")
-    print("📍 Testing: Both /api/process and /api/process/combo endpoints")
+    print("📍 Testing: /api/process/combo endpoint")
     print("🎯 Test Coverage: Minimal, Maximum, Evaluation, and Error Cases")
     print("🔧 Focus: Unified parameter structure and comprehensive validation")
     print("")
@@ -390,15 +286,12 @@ def main():
     results = []
     
     # Minimal parameter tests
-    results.append(test_minimal_simple_processing())
     results.append(test_minimal_combo_processing())
     
     # Maximum parameter tests
-    results.append(test_maximum_simple_processing())
     results.append(test_maximum_combo_processing())
     
     # Evaluation mode tests
-    results.append(test_evaluation_simple_processing())
     results.append(test_evaluation_combo_processing())
     
     # Unified structure validation

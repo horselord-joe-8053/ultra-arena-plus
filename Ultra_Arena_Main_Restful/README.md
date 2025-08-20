@@ -93,8 +93,7 @@ DEBUG = False
 | Endpoint | Method | Description | Parameters |
 |----------|--------|-------------|------------|
 | `/health` | GET | Server health check | None |
-| `/api/process` | POST | Process files with default combo | `input_pdf_dir_path`, `output_dir` |
-| `/api/process/combo` | POST | Process files with specific combo | `combo_id`, `input_pdf_dir_path`, `output_dir` |
+| `/api/process/combo` | POST | Process files with specific combo | `combo_name`, `input_pdf_dir_path`, `output_dir` |
 | `/api/combos` | GET | Get available combos | None |
 
 ### Health Check
@@ -137,9 +136,10 @@ curl -X GET "http://localhost:8000/api/combos"
 
 ### Process Files Request
 ```bash
-curl -X POST "http://localhost:8000/api/process" \
+curl -X POST "http://localhost:8000/api/process/combo" \
   -H "Content-Type: application/json" \
   -d '{
+    "combo_name": "combo_test_10_strategies",
     "input_pdf_dir_path": "/path/to/input",
     "output_dir": "/path/to/output"
   }'
@@ -148,6 +148,7 @@ curl -X POST "http://localhost:8000/api/process" \
 **Request Body:**
 ```json
 {
+  "combo_name": "combo_test_10_strategies",
   "input_pdf_dir_path": "/path/to/input",
   "output_dir": "/path/to/output",
   "run_type": "normal",
@@ -193,9 +194,10 @@ API_RATE_LIMIT = 100  # requests per minute
 curl -X GET "http://localhost:8000/health"
 
 # Process test files
-curl -X POST "http://localhost:8000/api/process" \
+curl -X POST "http://localhost:8000/api/process/combo" \
   -H "Content-Type: application/json" \
   -d '{
+    "combo_name": "combo_test_10_strategies",
     "input_pdf_dir_path": "/path/to/test/input",
     "output_dir": "/path/to/test/output"
   }'

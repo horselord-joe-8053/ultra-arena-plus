@@ -123,7 +123,6 @@ if ps -p "$SERVER_PID" > /dev/null 2>&1; then
     echo ""
     echo -e "${YELLOW}Available endpoints:${NC}"
     echo "  GET  http://localhost:$PORT/health"
-    echo "  POST http://localhost:$PORT/api/process"
     echo "  POST http://localhost:$PORT/api/process/combo"
     echo "  GET  http://localhost:$PORT/api/combos"
     echo "  GET  http://localhost:$PORT/api/profiles"
