@@ -208,7 +208,7 @@ def test_evaluation_combo_processing():
     
     # Evaluation mode data for combo processing
     data = {
-        "combo_name": "combo_test_8_strategies_1f",
+        "combo_name": "combo_test_8_strategies",
         "input_pdf_dir_path": paths["input_pdf_dir_path"],
         "output_dir": paths["output_dir"],
         "run_type": "evaluation",  # Optional: defaults to "normal"
