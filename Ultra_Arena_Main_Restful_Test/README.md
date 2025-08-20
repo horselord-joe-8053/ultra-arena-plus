@@ -101,9 +101,8 @@ python -m pytest tests/python_tests/performance_tests/ -v
 |-----------|---------|----------|
 | `simple_test_process_combo.py` | Combo processing | Full combo workflow |
 | `simple_test_process_files.py` | Direct file processing | File upload and processing |
-| `test_br_profile_combo.py` | Profile-specific testing | BR profile functionality |
 | `test_evaluation_combo.py` | Evaluation workflows | Evaluation processing |
-| `test_profile_switcher.py` | Profile switching | Dynamic profile management |
+| `test_unified_processing.py` | Unified processing tests | Comprehensive processing workflows |
 
 ### 3. Performance Tests
 | Test File | Purpose | Metrics |
