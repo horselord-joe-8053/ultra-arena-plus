@@ -1,6 +1,14 @@
-# Ultra Arena - Multi-Component LLM Processing Platform
+# Ultra Arena - Multi-Component LLM Processing and Evaluation Platform
 
-A comprehensive platform for processing documents through various LLM providers with multiple deployment and testing strategies.
+A comprehensive platform that serves as a competitive arena for evaluating Large Language Model (LLM) providers, models, and processing mechanisms. Ultra Arena enables systematic comparison of different LLM solutions by executing identical tasks across multiple providers and measuring performance metrics, cost efficiency, and output quality to facilitate data-driven decisions for LLM selection.
+
+## Key Features
+
+- **Multi-Provider Support**: Evaluate well-known LLM providers including cloud-based and locally hosted models
+- **Flexible Task Processing**: Handle text-only inputs or complex multi-modal tasks with file attachments
+- **Strategy Comparison**: Test unique combinations of LLM providers, models, and processing mechanisms (e.g., OCR text extraction, PDF-to-image conversion, or direct processing)
+- **Performance Analytics**: Comprehensive evaluation of response times, accuracy, cost per request, and throughput
+- **Modular Architecture**: Scalable design supporting CLI, REST API, and direct testing interfaces
 
 ## 🏗️ Workspace Structure
 
@@ -134,7 +142,17 @@ The monitoring dashboard provides real-time insights into:
 
 ## 📝 License
 
-[Add your license information here]
+This project is licensed under the **BSD 3-Clause License** - see the [LICENSE](LICENSE) file for details.
+
+**Copyright (c) 2025 Coder.Joe.8053**
+
+The BSD 3-Clause License is a permissive license that allows for:
+- Commercial use
+- Modification and distribution
+- Private use
+- Patent use
+
+The license requires that the copyright notice and license text be included in all copies or substantial portions of the software.
 
 ---
 
