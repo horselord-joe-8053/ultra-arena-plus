@@ -93,7 +93,10 @@ DEBUG = False
 | Endpoint | Method | Description | Parameters |
 |----------|--------|-------------|------------|
 | `/health` | GET | Server health check | None |
-| `/api/process/combo` | POST | Process files with specific combo | `combo_name`, `input_pdf_dir_path`, `output_dir` |
+| `/api/process/combo` | POST | Process files with specific combo (synchronous) | `combo_name`, `input_pdf_dir_path`, `output_dir` |
+| `/api/process/combo/async` | POST | Process files with specific combo (asynchronous) | `combo_name`, `input_pdf_dir_path`, `output_dir` |
+| `/api/requests/<request_id>` | GET | Get async request status | `request_id` (path parameter) |
+| `/api/requests` | GET | Get all async requests | None |
 | `/api/combos` | GET | Get available combos | None |
 
 ### Health Check
@@ -134,7 +137,7 @@ curl -X GET "http://localhost:8000/api/combos"
 
 ## 📤 Request/Response Examples
 
-### Process Files Request
+### Synchronous Process Files Request
 ```bash
 curl -X POST "http://localhost:8000/api/process/combo" \
   -H "Content-Type: application/json" \
@@ -156,6 +159,99 @@ curl -X POST "http://localhost:8000/api/process/combo" \
   "max_cc_strategies": 3,
   "max_cc_filegroups": 5,
   "max_files_per_request": 10
+}
+```
+
+### Asynchronous Process Files Request
+```bash
+curl -X POST "http://localhost:8000/api/process/combo/async" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "combo_name": "combo_test_10_strategies",
+    "input_pdf_dir_path": "/path/to/input",
+    "output_dir": "/path/to/output"
+  }'
+```
+
+**Response (HTTP 202 Accepted):**
+```json
+{
+  "status": "accepted",
+  "request_id": "req_20241215_143022_abc123def456",
+  "combo_name": "combo_test_10_strategies",
+  "benchmark_eval_mode": false,
+  "input_pdf_dir_path": "/path/to/input",
+  "output_dir": "/path/to/output",
+  "benchmark_file_path": null,
+  "prompt": {
+    "prompt_configuration": {
+      "system_prompt": {
+        "value": "You are a helpful assistant...",
+        "source": "profile_config"
+      }
+    },
+    "summary": {
+      "total_prompts": 1,
+      "sources_used": ["profile_config"]
+    }
+  },
+  "request_id": "req_20241215_143022_abc123def456",
+  "request_mechanism": "rest",
+  "request_start_time": "2024-12-15T14:30:22.123456Z",
+  "utc_timezone": "UTC",
+  "num_files_to_process": 5,
+  "num_strategies": 10,
+  "strategy_groups": [
+    "grp_directF_google_gemini25_para",
+    "grp_imageF_google_gemini25_para"
+  ],
+  "message": "Request accepted for processing. Use GET /api/requests/{request_id} to check status."
+}
+```
+
+### Check Request Status
+```bash
+curl -X GET "http://localhost:8000/api/requests/req_20241215_143022_abc123def456"
+```
+
+**Response (Processing):**
+```json
+{
+  "status": "processing",
+  "request_id": "req_20241215_143022_abc123def456",
+  "created_at": "2024-12-15T14:30:22.123456Z",
+  "progress": 45
+}
+```
+
+**Response (Completed):**
+```json
+{
+  "status": "completed",
+  "request_id": "req_20241215_143022_abc123def456",
+  "created_at": "2024-12-15T14:30:22.123456Z",
+  "completed_at": "2024-12-15T14:32:15.789012Z",
+  "progress": 100,
+  "performance": {
+    "configuration_assembly_time_ms": 45.2,
+    "server_config_cached": true
+  },
+  "results": {
+    "status": "completed",
+    "total_files_processed": 5,
+    "successful_files": 5,
+    "failed_files": 0,
+    "processing_time_seconds": 120.5,
+    "total_cost_usd": 0.045,
+    "strategies_executed": [
+      "grp_directF_google_gemini25_para",
+      "grp_imageF_google_gemini25_para"
+    ],
+    "output_files": [
+      "/path/to/output/results_20241215_143022_abc123/results.json",
+      "/path/to/output/results_20241215_143022_abc123/performance_summary.json"
+    ]
+  }
 }
 ```
 

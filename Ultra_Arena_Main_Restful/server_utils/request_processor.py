@@ -302,6 +302,94 @@ class RequestProcessor:
         
         return jsonify(response_data)
     
+    def format_async_combo_response(self, request_id: str, config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Format response for async combo processing endpoint (202 Accepted).
+        
+        Args:
+            request_id: The request ID for tracking
+            config: The processing configuration
+            
+        Returns:
+            Dict[str, Any]: Formatted JSON response for async processing
+        """
+        run_config = config.get("run_config", {})
+        
+        # Determine combo_name for response
+        combo_name = config.get("combo_name")
+        if combo_name is None:
+            combo_name = "default_single_combo_name"
+        
+        # Include prompt configuration that was used with source information
+        prompt_info = {}
+        prompt_config = config.get("prompt_config", {})
+        
+        # Get source information if available
+        source_info = prompt_config.get("_source_info", {})
+        
+        if source_info:
+            # Create detailed prompt info with sources
+            prompt_details = {}
+            for field, info in source_info.items():
+                if field != "_source_info":
+                    prompt_details[field] = {
+                        "value": info.get("value"),
+                        "source": info.get("source")
+                    }
+            
+            prompt_info = {
+                "prompt_configuration": prompt_details,
+                "summary": {
+                    "total_prompts": len(prompt_details),
+                    "sources_used": list(set(info.get("source") for info in source_info.values() if info.get("source")))
+                }
+            }
+        elif prompt_config and len(prompt_config) > 0:
+            # Fallback for legacy format
+            prompt_info = {
+                "prompt_overrides": list(prompt_config.keys()),
+                "note": "Legacy format - source information not available"
+            }
+        else:
+            prompt_info = {
+                "prompt_overrides": [],
+                "note": "Using profile default prompts"
+            }
+        
+        # Get strategy groups information
+        strategy_groups = []
+        try:
+            from config.config_combo_run import combo_config
+            if combo_name and combo_name in combo_config:
+                strategy_groups = combo_config[combo_name].get("strategy_groups", [])
+        except Exception as e:
+            logger.warning(f"⚠️ Could not get strategy groups: {e}")
+        
+        # Get request metadata if available
+        request_metadata = config.get("request_metadata", {})
+        
+        response_data = {
+            "status": "accepted",
+            "request_id": request_id,
+            "combo_name": combo_name,
+            "benchmark_eval_mode": run_config.get("benchmark_eval_mode", False),
+            "input_pdf_dir_path": str(run_config.get('input_pdf_dir_path', '')),
+            "output_dir": str(run_config.get('output_dir', '')),
+            "benchmark_file_path": str(run_config.get('benchmark_file_path')) if run_config.get('benchmark_file_path') else None,
+            "prompt": prompt_info,
+            # Note: performance and results are not included in async response
+            "request_id": request_metadata.get("request_id", "unknown"),
+            "request_mechanism": request_metadata.get("request_mechanism", "rest"),
+            "request_start_time": request_metadata.get("request_start_time", ""),
+            "utc_timezone": request_metadata.get("utc_timezone", "UTC"),
+            "num_files_to_process": len(run_config.get('pdf_file_paths', [])),
+            "num_strategies": len(strategy_groups),
+            "strategy_groups": strategy_groups,
+            "message": "Request accepted for processing. Use GET /api/requests/{request_id} to check status."
+        }
+        
+        return response_data
+    
     def log_processing_info(self, config: Dict[str, Any], endpoint_name: str):
         """
         Log processing information for both endpoints.

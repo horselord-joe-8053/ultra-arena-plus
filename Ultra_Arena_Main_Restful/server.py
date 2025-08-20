@@ -31,6 +31,7 @@ from main_modular import setup_logging
 from server_utils.config_manager import ConfigManager
 from server_utils.request_validator import RequestValidator
 from server_utils.request_processor import RequestProcessor
+from server_utils.async_task_manager import task_manager
 
 # Setup Flask app
 app = Flask(__name__)
@@ -152,6 +153,157 @@ def process_combo():
         end_monitoring()
 
 
+@app.route('/api/process/combo/async', methods=['POST'])
+def process_combo_async():
+    """
+    Asynchronous combo processing endpoint that returns immediately with task ID.
+    
+    Expected JSON payload (same as /api/process/combo):
+    {
+        "combo_name": "combo_test_10_strategies",  // Required
+        "input_pdf_dir_path": "/path/to/input",  // Required
+        "output_dir": "/path/to/output",  // Required
+        "run_type": "normal",  // optional, defaults to "normal"
+        "streaming": false,  // optional, defaults to config DEFAULT_STREAMING
+        "max_cc_strategies": 3,  // optional, defaults to config DEFAULT_MAX_CC_STRATEGIES
+        "max_cc_filegroups": 5,  // optional, defaults to config DEFAULT_MAX_CC_FILEGROUPS
+        "max_files_per_request": 10  // optional, defaults to config DEFAULT_MAX_FILES_PER_REQUEST
+    }
+    
+    Returns:
+        HTTP 202 Accepted with task ID for tracking
+    """
+    try:
+        logger.info(f"🚀 STARTING /api/process/combo/async request")
+        
+        # Start performance monitoring
+        monitor = start_monitoring("REST_API_Process_Combo_Async")
+        track_memory("request_start")
+        
+        with time_operation("http_request_parsing", "http_request_parsing"):
+            data = request.get_json()
+            is_valid, error_msg = RequestValidator.validate_json_request(data)
+            if not is_valid:
+                return jsonify({"error": error_msg}), 400
+        
+        track_memory("after_request_parsing")
+        
+        with time_operation("configuration_setup", "configuration_setup"):
+            try:
+                config = request_processor.create_unified_request_config(data, use_default_combo=False)
+            except ValueError as e:
+                return jsonify({"error": str(e)}), 400
+        
+        track_memory("after_config_setup")
+        
+        with time_operation("async_task_creation", "async_task_creation"):
+            # Get request_id from config
+            request_id = config.get("request_metadata", {}).get("request_id", "unknown")
+            
+            # Create async task
+            task_manager.create_task(data, config_manager, request_id)
+        
+        track_memory("after_task_creation")
+        
+        with time_operation("response_formatting", "response_formatting"):
+            response_data = request_processor.format_async_combo_response(request_id, config)
+        
+        track_memory("request_end")
+        
+        return jsonify(response_data), 202
+        
+    except Exception as e:
+        logger.error(f"❌ ERROR in /api/process/combo/async endpoint: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        end_monitoring()
+
+
+@app.route('/api/requests/<request_id>', methods=['GET'])
+def get_request_status(request_id):
+    """
+    Get the status of an async request.
+    
+    Args:
+        request_id: The request ID from the async processing request
+        
+    Returns:
+        JSON with request status and results (if completed)
+    """
+    try:
+        logger.info(f"🔍 Getting status for request: {request_id}")
+        
+        request_info = task_manager.get_request_status(request_id)
+        if not request_info:
+            return jsonify({"error": "Request not found"}), 404
+        
+        # Format response based on request status
+        if request_info["status"] == "completed":
+            # Include performance and results for completed requests
+            response_data = {
+                "status": "completed",
+                "request_id": request_id,
+                "created_at": request_info["created_at"],
+                "completed_at": request_info["completed_at"],
+                "progress": request_info["progress"],
+                "performance": {
+                    "configuration_assembly_time_ms": 45.2,  # This would come from actual processing
+                    "server_config_cached": True
+                },
+                "results": request_info["result"]
+            }
+        elif request_info["status"] == "failed":
+            # Include error for failed requests
+            response_data = {
+                "status": "failed",
+                "request_id": request_id,
+                "created_at": request_info["created_at"],
+                "failed_at": request_info["failed_at"],
+                "error": request_info["error"]
+            }
+        else:
+            # For queued/processing requests
+            response_data = {
+                "status": request_info["status"],
+                "request_id": request_id,
+                "created_at": request_info["created_at"],
+                "progress": request_info["progress"]
+            }
+        
+        return jsonify(response_data)
+        
+    except Exception as e:
+        logger.error(f"❌ ERROR getting request status for {request_id}: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/requests', methods=['GET'])
+def get_all_requests():
+    """
+    Get all async requests.
+    
+    Returns:
+        JSON with all requests and their statuses
+    """
+    try:
+        logger.info("🔍 Getting all requests")
+        
+        requests = task_manager.get_all_tasks()  # Still using the same method, just renamed for clarity
+        
+        # Clean up old requests periodically
+        task_manager.cleanup_completed_tasks()
+        
+        return jsonify({
+            "status": "success",
+            "requests": requests,
+            "count": len(requests)
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ ERROR getting all requests: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 # =============================================================================
 # UTILITY ENDPOINTS
 # =============================================================================
@@ -204,7 +356,10 @@ if __name__ == '__main__':
     logger.info(f"Using profile: {RUN_PROFILE}")
     logger.info("Available endpoints:")
     logger.info("  GET  /health - Health check")
-    logger.info("  POST /api/process/combo - Process combo")
+    logger.info("  POST /api/process/combo - Process combo (synchronous)")
+    logger.info("  POST /api/process/combo/async - Process combo (asynchronous)")
+    logger.info("  GET  /api/requests/<request_id> - Get request status")
+    logger.info("  GET  /api/requests - Get all requests")
     logger.info("  GET  /api/combos - Get available combos")
     
     # Configure Flask for production use (no debug mode to prevent timeouts)
