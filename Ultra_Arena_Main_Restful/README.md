@@ -56,8 +56,8 @@ graph TB
 
 | Directory | Purpose | Key Components |
 |-----------|---------|----------------|
-| **`server/`** | Core server implementation | `server.py`, `request_processor.py` |
-| **`server/config_assemblers/`** | Configuration management | `base_config_assembler.py`, `config_models.py` |
+| **`server_utils/`** | Core server implementation | `server.py`, `request_processor.py` |
+| **`server_utils/config_assemblers/`** | Configuration management | `base_config_assembler.py`, `config_models.py` |
 | **`run_profiles/`** | API profiles and configurations | `default_profile_restful/` |
 | **`performance_measure/`** | Performance monitoring | `core_monitor.py`, `rest_wrapper.py` |
 | **`cursor_gen/`** | Generated documentation | Implementation notes |

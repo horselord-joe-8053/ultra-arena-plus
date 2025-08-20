@@ -28,9 +28,9 @@ sys.path.insert(0, str(ultra_arena_main_path))
 from main_modular import setup_logging
 
 # Import our modular components
-from server.config_manager import ConfigManager
-from server.request_validator import RequestValidator
-from server.request_processor import RequestProcessor
+from server_utils.config_manager import ConfigManager
+from server_utils.request_validator import RequestValidator
+from server_utils.request_processor import RequestProcessor
 
 # Setup Flask app
 app = Flask(__name__)

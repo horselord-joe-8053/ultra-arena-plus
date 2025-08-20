@@ -32,7 +32,7 @@ class RestServerConfigAssembler(BaseConfigAssembler):
     
     def _get_profile_dir(self) -> Path:
         """Get the REST profile directory path."""
-        current_dir = Path(__file__).parent.parent.parent  # server/config_assemblers -> server -> Ultra_Arena_Main_Restful
+        current_dir = Path(__file__).parent.parent.parent  # server_utils/config_assemblers -> server_utils -> Ultra_Arena_Main_Restful
         return current_dir / "run_profiles" / self.run_profile
     
     def assemble_config(self) -> ServerConfig:

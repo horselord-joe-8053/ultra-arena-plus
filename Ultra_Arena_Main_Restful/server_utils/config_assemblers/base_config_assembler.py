@@ -240,7 +240,7 @@ class BaseConfigAssembler(ABC):
         try:
             # Import the centralized combo configuration
             # Fix the path to point to the correct location
-            current_dir = Path(__file__).parent.parent.parent  # server/config_assemblers -> server -> Ultra_Arena_Main_Restful
+            current_dir = Path(__file__).parent.parent.parent  # server_utils/config_assemblers -> server_utils -> Ultra_Arena_Main_Restful
             ultra_arena_main_path = current_dir.parent / "Ultra_Arena_Main"
             
             logger.info(f"🔍 Looking for combo config in: {ultra_arena_main_path}")
