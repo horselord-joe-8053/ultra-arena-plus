@@ -39,13 +39,13 @@ ultra-arena-plus/
 
 | Project | Purpose | Technology | Status |
 |---------|---------|------------|--------|
-| **Ultra_Arena_Main** | Core LLM processing engine with modular architecture | Python | ✅ Active |
-| **Ultra_Arena_Main_CLI** | Command-line interface for document processing | Python CLI | ✅ Active |
-| **Ultra_Arena_Main_Restful** | REST API server for web integration | FastAPI/Python | ✅ Active |
-| **Ultra_Arena_Monitor** | Real-time performance monitoring dashboard | Node.js/React | ✅ Active |
-| **Ultra_Arena_Main_CLI_Test** | Comprehensive CLI testing framework | Python/Pytest | ✅ Active |
-| **Ultra_Arena_Main_Restful_Test** | REST API testing suite | Python/Requests | ✅ Active |
-| **Ultra_Arena_Main_Direct_Test** | Direct testing without API layer | Python | ✅ Active |
+| **Ultra_Arena_Main** | <small>Core LLM processing engine with modular architecture</small> | <small>Python</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Main_CLI** | <small>Command-line interface for document processing</small> | <small>Python CLI</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Main_Restful** | <small>REST API server for web integration</small> | <small>FastAPI/Python</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Monitor** | <small>Real-time performance monitoring dashboard</small> | <small>Node.js/React</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Main_CLI_Test** | <small>Comprehensive CLI testing framework</small> | <small>Python/Pytest</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Main_Restful_Test** | <small>REST API testing suite</small> | <small>Python/Requests</small> | <small>✅ Active</small> |
+| **Ultra_Arena_Main_Direct_Test** | <small>Direct testing without API layer</small> | <small>Python</small> | <small>✅ Active</small> |
 
 ## 🚀 Quick Start
 
