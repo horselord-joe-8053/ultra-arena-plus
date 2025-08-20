@@ -96,7 +96,7 @@ def run_comprehensive_performance_test(file_count: int) -> Dict[str, Any]:
                 "python", "main.py",
                 "--profile", "default_profile_base",
                 "--input", isolated_input_dir,
-                "--combo", "combo_test_8_strategies_1f",
+                "--combo", "combo_test_8_strategies",
                 "--benchmark-eval-mode",
                 "--benchmark-file", str(paths['benchmark_file_path']),
                 "--streaming",

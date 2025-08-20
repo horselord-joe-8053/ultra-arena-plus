@@ -91,7 +91,7 @@ def run_cli_performance_test_isolated(file_count: int):
         "python", "main.py",
         "--profile", "default_profile_base",
         "--input", isolated_input_dir,  # Use isolated input directory
-        "--combo", "combo_test_8_strategies_1f",
+        "--combo", "combo_test_8_strategies",
         "--benchmark-eval-mode",
         "--benchmark-file", str(paths['benchmark_file_path']),
         "--streaming",

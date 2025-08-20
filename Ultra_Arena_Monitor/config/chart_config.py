@@ -25,16 +25,6 @@ except ImportError:
 # Directory containing JSON data files. Point this at where your JSON summaries live,
 # relative to the repository root (resolved from the monitor package root).
 # For the current repo, we have a consolidated JSON at Ultra_Arena_Test_Example/modular_results.json
-# JSON_DATA_DIR = "../Ultra_Arena_Main/output/results/json"  # Directory containing JSON data files
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_3_strategies/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_textF_strategies/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_8_strategies_1f/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_8_strategies_4f/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_8_strategies_13f/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_8_strategies_252f/json"
-
-# JSON_DATA_DIR = "../Ultra_Arena_Main_CLI/run_profiles/default_profile_cmd/output/results/combo/combo_test_8_strategies_13f/json"
-# JSON_DATA_DIR = "../Ultra_Arena_Main/run_profiles/default_profile/output/results/combo/combo_test_8_strategies_252f/json" # run config injection seems to have not worked
 JSON_DATA_DIR = "../Ultra_Arena_Main_Restful_Test/test_fixtures/default_fixture/output_files/results/results_250819_152301_8ce01d31-f39c-42ea-b1da-53b4dbdcf323/json"
 
 # NEW DIRECTORY STRUCTURE (as of latest update):

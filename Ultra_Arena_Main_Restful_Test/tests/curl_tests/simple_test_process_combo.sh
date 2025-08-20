@@ -23,7 +23,7 @@ echo ""
 
 json_data=$(cat <<EOF
 {
-  "combo_name": "combo_test_8_strategies_1f",
+          "combo_name": "combo_test_8_strategies",
   "input_pdf_dir_path": "${INPUT_DIR}",
   "run_config": {
     "run_type": "normal",

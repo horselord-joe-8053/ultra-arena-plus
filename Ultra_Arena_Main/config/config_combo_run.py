@@ -30,7 +30,7 @@ combo_config = {
             "grp_test_imageF_claude_para"
         ]
     },
-    "combo_test_8_strategies_1f" : {
+    "combo_test_8_strategies" : {
         "strategy_groups" : [
             "grp_directF_google_gemini25_para",
             "grp_imageF_google_gemini25_para",
@@ -46,22 +46,7 @@ combo_config = {
             "grp_imageF_grok_2_para"
         ]
     },    
-    "combo_test_8_strategies_4f" : {
-        "strategy_groups" : [
-            "grp_directF_google_gemini25_para",
-            "grp_imageF_google_gemini25_para",
-            "grp_textF_google_gemini25_para",
-            # "grp_directF_dSeek_dChat_para", # WARNING - no support for direct pdf file
-            # "grp_imageF_dSeek_dChat_para", #    WARNING - Unsupported file type: temp_images/image_5eb95081.png
-            "grp_textF_dSeek_dChat_para",
-            "grp_test_imageF_openai_para",
-            "grp_test_imageF_claude_para",
-            "grp_test_textF_claude_para",
-            "grp_imageF_togetherai_llama_4_17b_para",
-            "grp_imageF_togetherai_llama_vision_90b_para",
-            "grp_imageF_grok_2_para"
-        ]
-    }, 
+ 
     "combo_test_8_strategies_13f" : {
         "strategy_groups" : [
             "grp_directF_google_gemini25_para",
@@ -134,7 +119,7 @@ combo_config = {
             # "grp_textF_dSeek_dChat_para", # no longer bad, after fixing ""list indices must be integers or slices, not str""
         ]
     },
-       "combo_test_google_imageF_strategies_1f" : {
+    "combo_test_google_imageF_strategies_1f" : {
         "strategy_groups" : [
             "grp_imageF_google_gemini25_para"
         ]

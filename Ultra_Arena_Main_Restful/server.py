@@ -160,7 +160,7 @@ def process_combo():
     
     Expected JSON payload (flattened structure):
     {
-        "combo_name": "combo_test_8_strategies_1f",  // Required
+        "combo_name": "combo_test_8_strategies",  // Required
         "input_pdf_dir_path": "/path/to/input",  // Required
         "output_dir": "/path/to/output",  // Required
         "run_type": "normal",  // optional, defaults to "normal"
@@ -172,7 +172,7 @@ def process_combo():
     
     For evaluation runs:
     {
-        "combo_name": "combo_test_8_strategies_1f",  // Required
+        "combo_name": "combo_test_8_strategies",  // Required
         "input_pdf_dir_path": "/path/to/input",  // Required
         "output_dir": "/path/to/output",  // Required
         "run_type": "evaluation",  // optional, defaults to "normal"

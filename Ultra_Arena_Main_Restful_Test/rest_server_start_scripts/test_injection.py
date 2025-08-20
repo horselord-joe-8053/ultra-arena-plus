@@ -16,11 +16,11 @@ def test_injection():
     print(f"📋 Original combo_config type: {type(combo_config)}")
     print(f"📋 Original combo_config keys: {list(combo_config.keys())[:5]}...")
     
-    # Check if combo_test_8_strategies_4f exists and what it contains
-    if "combo_test_8_strategies_4f" in combo_config:
-        combo = combo_config["combo_test_8_strategies_4f"]
-        strategy_groups = combo.get("strategy_groups", [])
-        print(f"✅ combo_test_8_strategies_4f found with {len(strategy_groups)} strategy groups")
+    # Check if combo_test_8_strategies exists and what it contains
+if "combo_test_8_strategies" in combo_config:
+    combo = combo_config["combo_test_8_strategies"]
+    strategy_groups = combo.get("strategy_groups", [])
+    print(f"✅ combo_test_8_strategies found with {len(strategy_groups)} strategy groups")
         
         # Check for direct file deepseek
         direct_deepseek = [s for s in strategy_groups if "directF" in s and "dSeek" in s]
@@ -33,7 +33,7 @@ def test_injection():
         for i, group in enumerate(strategy_groups, 1):
             print(f"   {i}. {group}")
     else:
-        print(f"❌ combo_test_8_strategies_4f NOT found")
+        print(f"❌ combo_test_8_strategies NOT found")
     
     print("\n" + "="*60)
     print("🔍 Testing injection mechanism...")

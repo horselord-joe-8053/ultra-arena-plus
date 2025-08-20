@@ -30,10 +30,10 @@ def main():
             print(f"   {i}. {combo}")
         
         # Check for the specific combo we're testing
-        if "combo_test_8_strategies_4f" in combos:
-            print(f"✅ combo_test_8_strategies_4f found in available combos")
-        else:
-            print(f"❌ combo_test_8_strategies_4f NOT found in available combos")
+        if "combo_test_8_strategies" in combos:
+    print(f"✅ combo_test_8_strategies found in available combos")
+else:
+    print(f"❌ combo_test_8_strategies NOT found in available combos")
             
     except Exception as e:
         print(f"❌ Error loading combo configuration: {e}")
