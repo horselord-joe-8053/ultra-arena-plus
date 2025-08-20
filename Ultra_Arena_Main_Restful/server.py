@@ -204,7 +204,6 @@ if __name__ == '__main__':
     logger.info(f"Using profile: {RUN_PROFILE}")
     logger.info("Available endpoints:")
     logger.info("  GET  /health - Health check")
-    logger.info("  POST /api/process - Process files")
     logger.info("  POST /api/process/combo - Process combo")
     logger.info("  GET  /api/combos - Get available combos")
     
