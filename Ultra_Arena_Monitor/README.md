@@ -1,14 +1,14 @@
-# Ultra Arena Monitor - Real-time Performance Dashboard
+# Ultra Arena Monitor - Performance Dashboard
 
-A real-time monitoring and performance dashboard for the Ultra Arena platform, providing comprehensive insights into system performance, processing metrics, and operational status.
+A performance dashboard for the Ultra Arena platform, providing insights into system performance, processing metrics, and operational status.
 
 ## 🏗️ Architecture Overview
 
 ```mermaid
 graph TB
     subgraph "Frontend Layer"
-        A[React Dashboard]
-        B[Real-time Charts]
+        A[Static HTML Dashboard]
+        B[Charts]
         C[Status Indicators]
         D[Performance Metrics]
     end
@@ -52,18 +52,14 @@ graph TB
 
 | Directory | Purpose | Key Components |
 |-----------|---------|----------------|
-| **`frontend/`** | React-based dashboard | `static/`, `package.json` |
-| **`backend/`** | Node.js server | `server.py`, `requirements.txt` |
+| **`frontend/`** | Static HTML dashboard | `static/`, `package.json` |
+| **`backend/`** | Python server | `server.py`, `requirements.txt` |
 | **`config/`** | Configuration files | `monitoring_config.py`, `chart_config.py` |
-| **`package.json`** | Node.js dependencies | Frontend dependencies |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 ```bash
-# Install Node.js dependencies
-npm install
-
 # Install Python dependencies
 cd backend
 pip install -r requirements.txt
@@ -76,7 +72,8 @@ cd backend
 python server.py
 
 # Start frontend (in new terminal)
-npm start
+cd frontend
+python -m http.server 3000
 ```
 
 ### Access Dashboard

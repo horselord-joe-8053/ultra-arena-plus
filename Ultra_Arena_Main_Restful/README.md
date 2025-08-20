@@ -1,6 +1,6 @@
 # Ultra Arena REST API Server
 
-A high-performance REST API server built with FastAPI that provides web-based access to the Ultra Arena document processing platform. Features comprehensive API endpoints, real-time monitoring, and scalable architecture.
+A REST API server built with Flask that provides web-based access to the Ultra Arena document processing platform. Features API endpoints for document processing and combo operations.
 
 ## 🏗️ Architecture Overview
 
@@ -12,10 +12,10 @@ graph TB
         C[CLI Client]
     end
     
-    subgraph "API Gateway"
-        D[FastAPI Server]
+    subgraph "API Layer"
+        D[Flask Server]
         E[Request Router]
-        F[Authentication]
+        F[CORS Support]
     end
     
     subgraph "Processing Layer"
@@ -75,7 +75,7 @@ pip install -r requirements.txt
 python server.py
 
 # Production mode
-uvicorn server:app --host 0.0.0.0 --port 8000 --workers 4
+python server.py
 ```
 
 ### Server Configuration
@@ -84,7 +84,6 @@ uvicorn server:app --host 0.0.0.0 --port 8000 --workers 4
 HOST = "0.0.0.0"
 PORT = 8000
 DEBUG = False
-WORKERS = 4
 ```
 
 ## 🔌 API Endpoints
@@ -94,12 +93,9 @@ WORKERS = 4
 | Endpoint | Method | Description | Parameters |
 |----------|--------|-------------|------------|
 | `/health` | GET | Server health check | None |
-| `/combos` | GET | List available combos | None |
-| `/combos/{combo_id}` | GET | Get specific combo | `combo_id` |
-| `/process-combo` | POST | Process combo with files | `combo_id`, `files` |
-| `/process-files` | POST | Process files directly | `strategy`, `provider`, `files` |
-| `/profiles` | GET | List available profiles | None |
-| `/profiles/{profile_id}` | GET | Get profile details | `profile_id` |
+| `/api/process` | POST | Process files with default combo | `input_pdf_dir_path`, `output_dir` |
+| `/api/process/combo` | POST | Process files with specific combo | `combo_id`, `input_pdf_dir_path`, `output_dir` |
+| `/api/combos` | GET | Get available combos | None |
 
 ### Health Check
 ```bash
@@ -110,115 +106,59 @@ curl -X GET "http://localhost:8000/health"
 ```json
 {
   "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00Z",
-  "version": "1.0.0",
-  "uptime": 3600
+  "service": "Ultra Arena Main RESTful API",
+  "version": "1.0.0"
 }
 ```
 
 ### Get Available Combos
 ```bash
-curl -X GET "http://localhost:8000/combos"
+curl -X GET "http://localhost:8000/api/combos"
 ```
 
 **Response:**
 ```json
 {
+  "status": "success",
   "combos": [
     {
       "id": "benchmark_combo",
       "name": "Benchmark Processing",
-      "description": "Standard benchmark processing combo",
-      "strategies": ["direct_file", "image_first"],
-      "providers": ["claude", "gpt"]
+      "description": "Standard benchmark processing combo"
     }
-  ]
+  ],
+  "count": 1
 }
 ```
 
+
+
 ## 📤 Request/Response Examples
 
-### Process Combo Request
+### Process Files Request
 ```bash
-curl -X POST "http://localhost:8000/process-combo" \
-  -H "Content-Type: multipart/form-data" \
-  -F "combo_id=benchmark_combo" \
-  -F "files=@document1.pdf" \
-  -F "files=@document2.pdf"
+curl -X POST "http://localhost:8000/api/process" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input_pdf_dir_path": "/path/to/input",
+    "output_dir": "/path/to/output"
+  }'
 ```
 
 **Request Body:**
 ```json
 {
-  "combo_id": "benchmark_combo",
-  "files": ["document1.pdf", "document2.pdf"],
-  "options": {
-    "timeout": 300,
-    "max_concurrent": 4
-  }
+  "input_pdf_dir_path": "/path/to/input",
+  "output_dir": "/path/to/output",
+  "run_type": "normal",
+  "streaming": false,
+  "max_cc_strategies": 3,
+  "max_cc_filegroups": 5,
+  "max_files_per_request": 10
 }
 ```
 
-**Response:**
-```json
-{
-  "request_id": "req_123456789",
-  "status": "processing",
-  "estimated_time": 120,
-  "files_count": 2,
-  "combo": {
-    "id": "benchmark_combo",
-    "strategies": ["direct_file", "image_first"]
-  }
-}
-```
 
-### Process Files Directly
-```bash
-curl -X POST "http://localhost:8000/process-files" \
-  -H "Content-Type: multipart/form-data" \
-  -F "strategy=direct_file" \
-  -F "provider=claude" \
-  -F "files=@document.pdf"
-```
-
-## 📊 API Models
-
-### Request Models
-```python
-class ProcessComboRequest(BaseModel):
-    combo_id: str
-    files: List[UploadFile]
-    options: Optional[ProcessOptions] = None
-
-class ProcessFilesRequest(BaseModel):
-    strategy: str
-    provider: str
-    files: List[UploadFile]
-    options: Optional[ProcessOptions] = None
-
-class ProcessOptions(BaseModel):
-    timeout: Optional[int] = 300
-    max_concurrent: Optional[int] = 4
-    output_format: Optional[str] = "json"
-```
-
-### Response Models
-```python
-class ProcessResponse(BaseModel):
-    request_id: str
-    status: str
-    estimated_time: Optional[int]
-    files_count: int
-    results: Optional[List[ProcessResult]]
-
-class ProcessResult(BaseModel):
-    file_name: str
-    status: str
-    processing_time: float
-    result: Optional[Dict]
-    error: Optional[str]
-```
 
 ## 🔧 Configuration
 
@@ -232,12 +172,7 @@ MAX_CONCURRENT_STRATEGIES = 4
 API_RATE_LIMIT = 100  # requests per minute
 ```
 
-### API Keys Configuration
-```python
-# run_profiles/default_profile_restful/config_api_keys.py
-CLAUDE_API_KEY = "your-claude-api-key"
-OPENAI_API_KEY = "your-openai-api-key"
-```
+
 
 ## 📈 Performance Monitoring
 
@@ -248,28 +183,7 @@ OPENAI_API_KEY = "your-openai-api-key"
 - **Active Connections**: Current active connections
 - **Queue Length**: Pending requests in queue
 
-### Performance Dashboard
-```bash
-# Access monitoring dashboard
-http://localhost:8000/monitor
-```
 
-### Metrics Endpoint
-```bash
-curl -X GET "http://localhost:8000/metrics"
-```
-
-**Response:**
-```json
-{
-  "requests_per_second": 2.5,
-  "average_response_time": 45.2,
-  "error_rate": 0.02,
-  "active_connections": 12,
-  "queue_length": 3,
-  "uptime": 3600
-}
-```
 
 ## 🧪 Testing
 
@@ -278,49 +192,18 @@ curl -X GET "http://localhost:8000/metrics"
 # Health check
 curl -X GET "http://localhost:8000/health"
 
-# Get combos
-curl -X GET "http://localhost:8000/combos"
-
-# Process test file
-curl -X POST "http://localhost:8000/process-files" \
-  -F "strategy=direct_file" \
-  -F "provider=claude" \
-  -F "files=@test_document.pdf"
+# Process test files
+curl -X POST "http://localhost:8000/api/process" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input_pdf_dir_path": "/path/to/test/input",
+    "output_dir": "/path/to/test/output"
+  }'
 ```
 
-### Load Testing
-```bash
-# Using Apache Bench
-ab -n 100 -c 10 http://localhost:8000/health
 
-# Using wrk
-wrk -t12 -c400 -d30s http://localhost:8000/health
-```
 
-## 🔒 Security
 
-### Authentication
-```python
-# API Key Authentication
-API_KEY_HEADER = "X-API-Key"
-API_KEYS = ["key1", "key2", "key3"]
-```
-
-### Rate Limiting
-```python
-# Rate limiting configuration
-RATE_LIMIT_PER_MINUTE = 100
-RATE_LIMIT_PER_HOUR = 1000
-```
-
-### CORS Configuration
-```python
-# CORS settings
-CORS_ORIGINS = [
-    "http://localhost:3000",
-    "https://yourdomain.com"
-]
-```
 
 ## 🐛 Error Handling
 
@@ -370,17 +253,7 @@ CORS_ORIGINS = [
 4. Add error handling
 5. Write tests
 
-### Custom Middleware
-```python
-# Add custom middleware
-@app.middleware("http")
-async def add_process_time_header(request, call_next):
-    start_time = time.time()
-    response = await call_next(request)
-    process_time = time.time() - start_time
-    response.headers["X-Process-Time"] = str(process_time)
-    return response
-```
+
 
 ### Environment Variables
 ```bash
@@ -388,11 +261,6 @@ async def add_process_time_header(request, call_next):
 HOST=0.0.0.0
 PORT=8000
 DEBUG=false
-WORKERS=4
-
-# API configuration
-API_RATE_LIMIT=100
-API_TIMEOUT=300
 ```
 
 ## 📝 Logging
@@ -412,24 +280,10 @@ API_TIMEOUT=300
 
 ## 🚀 Deployment
 
-### Docker Deployment
-```dockerfile
-FROM python:3.9-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-EXPOSE 8000
-
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
 ### Production Deployment
 ```bash
-# Using Gunicorn
-gunicorn server:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+# Using Python directly
+python server.py
 
 # Using systemd
 sudo systemctl start ultra-arena-restful
@@ -438,4 +292,4 @@ sudo systemctl enable ultra-arena-restful
 
 ---
 
-For detailed API documentation, visit `http://localhost:8000/docs` when the server is running.
+For detailed API documentation, check the server.py file for available endpoints.

@@ -94,7 +94,7 @@ python -m pytest tests/python_tests/performance_tests/ -v
 | Test File | Purpose | Endpoints Tested |
 |-----------|---------|------------------|
 | `simple_test_health.py` | Basic server health | `/health` |
-| `simple_test_get_combos.py` | Combo listing | `/combos` |
+| `simple_test_get_combos.py` | Combo listing | `/api/combos` |
 
 ### 2. Functional Tests
 | Test File | Purpose | Coverage |
