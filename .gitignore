@@ -1,0 +1,84 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.env.*
+.mypy_cache/
+.pytype/
+.coverage
+htmlcov/
+.cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# IDE/editors
+.vscode/
+.idea/
+
+# AI-generated artifacts
+cursor_gen/
+**/cursor_gen/
+clean_cache.sh
+
+# Project outputs
+Ultra_Arena_Main/output/
+Ultra_Arena_Test_Example/output/
+
+# Test output files (contain generated results with absolute paths)
+**/test_fixtures/*/output_files/
+**/performance_measure/results/
+**/tests/*/results/
+
+# API Keys and sensitive configuration files
+**/config_api_keys.py
+
+# Local secrets (do not commit)
+Ultra_Arena_Main/config/config_api_keys_local.py
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Pytest cache
+.pytest_cache/
+.pytest_cache
+
+# Temporary images
+temp_images/
+**/temp_images/

@@ -1,0 +1,34 @@
+{
+  "test_configuration": {
+    "file_count": 4,
+    "strategy_count": 8,
+    "input_directory": "/var/folders/5f/3y6wk0fs6tz1nlncqzdzbgtc0000gn/T/rest_comprehensive_test_4_files_ezbdggji",
+    "output_directory": "/Users/jameswang9311/Documents/My_Ultra_Arena_Fork/ultra-arena-frk/Ultra_Arena_Main_Restful_Test/tests/python_tests/performance_tests/../../../test_fixtures/default_fixture/output_files",
+    "combo_name": "combo_test_8_strategies_4f"
+  },
+  "performance_metrics": {
+    "total_test_time": 179.17828512191772,
+    "http_request_time": 179.16545701026917,
+    "setup_time": 0.01282811164855957,
+    "response_status": 200
+  },
+  "request_data": {
+    "combo_name": "combo_test_8_strategies_4f",
+    "input_pdf_dir_path": "/var/folders/5f/3y6wk0fs6tz1nlncqzdzbgtc0000gn/T/rest_comprehensive_test_4_files_ezbdggji",
+    "output_dir": "/Users/jameswang9311/Documents/My_Ultra_Arena_Fork/ultra-arena-frk/Ultra_Arena_Main_Restful_Test/tests/python_tests/performance_tests/../../../test_fixtures/default_fixture/output_files",
+    "run_type": "normal",
+    "streaming": false,
+    "max_cc_strategies": 8,
+    "max_cc_filegroups": 5,
+    "max_files_per_request": 10
+  },
+  "response_data": {
+    "benchmark_eval_mode": false,
+    "benchmark_file_path": null,
+    "combo_name": "combo_test_8_strategies_4f",
+    "input_pdf_dir_path": "/var/folders/5f/3y6wk0fs6tz1nlncqzdzbgtc0000gn/T/rest_comprehensive_test_4_files_ezbdggji",
+    "output_dir": "/Users/jameswang9311/Documents/My_Ultra_Arena_Fork/ultra-arena-frk/Ultra_Arena_Main_Restful_Test/tests/python_tests/performance_tests/../../../test_fixtures/default_fixture/output_files",
+    "results": 0,
+    "status": "success"
+  }
+}

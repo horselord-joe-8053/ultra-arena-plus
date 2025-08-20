@@ -1,0 +1,13 @@
+# Ultra Arena Main RESTful API Requirements
+# This project depends on the Ultra_Arena_Main library
+
+# Web framework
+Flask==2.3.3
+Flask-CORS==4.0.0
+
+# Core dependencies (inherited from Ultra_Arena_Main)
+# The actual dependencies are in Ultra_Arena_Main/requirements.txt
+# This file is mainly for documentation and potential future API-specific dependencies
+
+# Note: This project imports from Ultra_Arena_Main, so ensure that project's
+# requirements are installed in the same environment 
