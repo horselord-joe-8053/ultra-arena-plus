@@ -1,6 +1,11 @@
-# Ultra Arena - Multi-Component LLM Processing and Evaluation Platform
+# Ultra Arena - Multi-LLM Processing and Evaluation Platform
 
-A comprehensive platform that serves as a competitive arena for evaluating Large Language Model (LLM) providers, models, and processing mechanisms. Ultra Arena enables systematic comparison of different LLM solutions by executing identical tasks across multiple providers and measuring performance metrics, cost efficiency, and output quality to facilitate data-driven decisions for LLM selection.
+## **Ultra Arena** - A comprehensive platform for LLM evaluation and intelligent task execution.
+
+• 🔍 **Evaluates** Large Language Model (LLM) providers, models, and processing mechanisms  
+• ⚖️ **Compares** LLM solutions by executing identical tasks across multiple providers  
+• 📈 **Measures** performance, cost, and quality metrics systematically  
+• 🤖 **Functions as an intelligent agent** - can be configured to automatically execute tasks using the best-performing strategy based on evaluation results
 
 ## Key Features
 
@@ -9,6 +14,10 @@ A comprehensive platform that serves as a competitive arena for evaluating Large
 - **Strategy Comparison**: Test unique combinations of LLM providers, models, and processing mechanisms (e.g., OCR text extraction, PDF-to-image conversion, or direct processing)
 - **Performance Analytics**: Comprehensive evaluation of response times, accuracy, cost per request, and throughput
 - **Modular Architecture**: Scalable design supporting CLI, REST API, and direct testing interfaces
+- **Dual-Level Parallelization**: 
+  - **Strategy-Level**: Process multiple LLM strategies concurrently for efficient comparison
+  - **File-Level**: Handle multiple input files in parallel within each strategy for optimal throughput
+  - **Configurable Concurrency**: Adjustable parallelization levels to optimize for your hardware and workload requirements
 
 ## 🏗️ Workspace Structure
 
