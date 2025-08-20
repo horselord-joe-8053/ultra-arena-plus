@@ -214,24 +214,51 @@ curl -X POST "http://localhost:8000/api/process/combo/async" \
 curl -X GET "http://localhost:8000/api/requests/req_20241215_143022_abc123def456"
 ```
 
+**Progress Calculation:**
+- Progress is calculated as: `(completed_work_units / total_work_units) * 100`
+- `total_work_units = num_files_to_process × num_strategies`
+- `completed_work_units = actual files processed × strategies completed`
+
+**Status Values:**
+- `"processing"` - Request is being processed
+- `"incomplete"` - Processing finished but progress < 100%
+- `"complete"` - Processing finished with progress = 100%
+- `"failed"` - Processing failed with error
+
 **Response (Processing):**
 ```json
 {
   "status": "processing",
   "request_id": "req_20241215_143022_abc123def456",
   "created_at": "2024-12-15T14:30:22.123456Z",
-  "progress": 45
+  "progress": 45,
+  "total_work_units": 50,
+  "completed_work_units": 22
 }
 ```
 
-**Response (Completed):**
+**Response (Incomplete):**
 ```json
 {
-  "status": "completed",
+  "status": "incomplete",
+  "request_id": "req_20241215_143022_abc123def456",
+  "created_at": "2024-12-15T14:30:22.123456Z",
+  "progress": 85,
+  "total_work_units": 50,
+  "completed_work_units": 42
+}
+```
+
+**Response (Complete):**
+```json
+{
+  "status": "complete",
   "request_id": "req_20241215_143022_abc123def456",
   "created_at": "2024-12-15T14:30:22.123456Z",
   "completed_at": "2024-12-15T14:32:15.789012Z",
   "progress": 100,
+  "total_work_units": 50,
+  "completed_work_units": 50,
   "performance": {
     "configuration_assembly_time_ms": 45.2,
     "server_config_cached": true

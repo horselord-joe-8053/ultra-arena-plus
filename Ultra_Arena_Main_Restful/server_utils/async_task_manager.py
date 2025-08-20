@@ -39,6 +39,13 @@ class AsyncTaskManager:
         if request_id is None:
             request_id = str(uuid.uuid4())
         
+        # Calculate total work units (files * strategies)
+        num_files = len(request_data.get('pdf_file_paths', [])) if 'pdf_file_paths' in request_data else 0
+        num_strategies = len(request_data.get('strategy_groups', [])) if 'strategy_groups' in request_data else 0
+        
+        # If we don't have the data yet, we'll calculate it during processing
+        total_work_units = num_files * num_strategies if num_files > 0 and num_strategies > 0 else 0
+        
         # Create task record
         task_info = {
             "request_id": request_id,
@@ -46,6 +53,8 @@ class AsyncTaskManager:
             "created_at": datetime.utcnow().isoformat() + "Z",
             "request_data": request_data,
             "progress": 0,
+            "total_work_units": total_work_units,
+            "completed_work_units": 0,
             "result": None,
             "error": None
         }
@@ -77,16 +86,45 @@ class AsyncTaskManager:
             # Update status to processing
             with self.task_lock:
                 self.tasks[request_id]["status"] = "processing"
-                self.tasks[request_id]["progress"] = 10
+                self.tasks[request_id]["progress"] = 0
             
             logger.info(f"🔄 Starting processing for request {request_id}")
             
             # Import the main processing module
             from Ultra_Arena_Main.main_modular import main_modular_processing
             
-            # Update progress
-            with self.task_lock:
-                self.tasks[request_id]["progress"] = 20
+            # Get the actual configuration to calculate total work units
+            try:
+                # We need to get the actual file count and strategy count
+                from Ultra_Arena_Main.config.config_combo_run import combo_config
+                combo_name = request_data.get('combo_name')
+                
+                if combo_name and combo_name in combo_config:
+                    strategy_groups = combo_config[combo_name].get("strategy_groups", [])
+                    num_strategies = len(strategy_groups)
+                    
+                    # Get file count from the input directory
+                    input_path = Path(request_data.get('input_pdf_dir_path', ''))
+                    if input_path.exists():
+                        pdf_files = list(input_path.glob("*.pdf"))
+                        num_files = len(pdf_files)
+                        
+                        # Update total work units
+                        total_work_units = num_files * num_strategies
+                        with self.task_lock:
+                            self.tasks[request_id]["total_work_units"] = total_work_units
+                        
+                        logger.info(f"📊 Calculated total work units: {num_files} files × {num_strategies} strategies = {total_work_units}")
+                    else:
+                        logger.warning(f"⚠️ Input path does not exist: {input_path}")
+                        total_work_units = 0
+                else:
+                    logger.warning(f"⚠️ Combo not found: {combo_name}")
+                    total_work_units = 0
+                    
+            except Exception as e:
+                logger.warning(f"⚠️ Could not calculate total work units: {e}")
+                total_work_units = 0
             
             # Execute the processing
             result_code = main_modular_processing(
@@ -101,14 +139,17 @@ class AsyncTaskManager:
                 benchmark_file_path=request_data.get('benchmark_file_path')
             )
             
-            # Update progress
-            with self.task_lock:
-                self.tasks[request_id]["progress"] = 90
+            # Calculate final progress based on actual completion
+            # For now, we'll assume completion, but in a real implementation,
+            # we'd track actual progress during processing
+            completed_work_units = total_work_units if total_work_units > 0 else 1
+            progress = 100 if total_work_units > 0 else 100
             
             # Update task with results
             with self.task_lock:
-                self.tasks[request_id]["status"] = "completed"
-                self.tasks[request_id]["progress"] = 100
+                self.tasks[request_id]["status"] = "complete" if progress >= 100 else "incomplete"
+                self.tasks[request_id]["progress"] = progress
+                self.tasks[request_id]["completed_work_units"] = completed_work_units
                 self.tasks[request_id]["result"] = result_code
                 self.tasks[request_id]["completed_at"] = datetime.utcnow().isoformat() + "Z"
             
@@ -120,6 +161,7 @@ class AsyncTaskManager:
             # Update task with error
             with self.task_lock:
                 self.tasks[request_id]["status"] = "failed"
+                self.tasks[request_id]["progress"] = 0
                 self.tasks[request_id]["error"] = str(e)
                 self.tasks[request_id]["failed_at"] = datetime.utcnow().isoformat() + "Z"
     

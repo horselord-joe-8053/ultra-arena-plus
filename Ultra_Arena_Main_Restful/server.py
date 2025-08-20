@@ -238,19 +238,31 @@ def get_request_status(request_id):
             return jsonify({"error": "Request not found"}), 404
         
         # Format response based on request status
-        if request_info["status"] == "completed":
+        if request_info["status"] == "complete":
             # Include performance and results for completed requests
             response_data = {
-                "status": "completed",
+                "status": "complete",
                 "request_id": request_id,
                 "created_at": request_info["created_at"],
                 "completed_at": request_info["completed_at"],
                 "progress": request_info["progress"],
+                "total_work_units": request_info.get("total_work_units", 0),
+                "completed_work_units": request_info.get("completed_work_units", 0),
                 "performance": {
                     "configuration_assembly_time_ms": 45.2,  # This would come from actual processing
                     "server_config_cached": True
                 },
                 "results": request_info["result"]
+            }
+        elif request_info["status"] == "incomplete":
+            # Include progress for incomplete requests
+            response_data = {
+                "status": "incomplete",
+                "request_id": request_id,
+                "created_at": request_info["created_at"],
+                "progress": request_info["progress"],
+                "total_work_units": request_info.get("total_work_units", 0),
+                "completed_work_units": request_info.get("completed_work_units", 0)
             }
         elif request_info["status"] == "failed":
             # Include error for failed requests
@@ -259,6 +271,7 @@ def get_request_status(request_id):
                 "request_id": request_id,
                 "created_at": request_info["created_at"],
                 "failed_at": request_info["failed_at"],
+                "progress": request_info["progress"],
                 "error": request_info["error"]
             }
         else:
@@ -267,7 +280,9 @@ def get_request_status(request_id):
                 "status": request_info["status"],
                 "request_id": request_id,
                 "created_at": request_info["created_at"],
-                "progress": request_info["progress"]
+                "progress": request_info["progress"],
+                "total_work_units": request_info.get("total_work_units", 0),
+                "completed_work_units": request_info.get("completed_work_units", 0)
             }
         
         return jsonify(response_data)
