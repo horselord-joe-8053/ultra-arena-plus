@@ -144,10 +144,10 @@ The monitoring dashboard provides insights into:
 
 The goal is a practical balance of accuracy (lower error rates), speed (lower total processing time), and cost (lower total token cost). Across multiple evaluation runs, Google Gemini consistently demonstrates superior performance on this composite metric.
 
-![Monitor comparison - 8 configurations](docs/images/monitor/UA_Comparison_by_8.jpeg)
+![Monitor comparison - 8 configurations](./docs/images/monitor/UA_Comparison_by_8.jpeg)
 *Performance comparison across 8 LLM configurations showing accuracy, speed, and cost metrics. Lower bars indicate better performance for most charts.*
 
-![Monitor comparison - 4 configurations](docs/images/monitor/UA_Comparison_by_4.jpeg)
+![Monitor comparison - 4 configurations](./docs/images/monitor/UA_Comparison_by_4.jpeg)
 *Performance comparison across 4 LLM configurations with refined evaluation setup. Lower bars indicate better performance for most charts.*
 
 **Key Performance Takeaways:**
