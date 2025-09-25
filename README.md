@@ -9,19 +9,15 @@
 
 ### 🎥 **Platform Overview Video**
 
-<div align="center">
-
 <a href="https://drive.google.com/file/d/15FWKfDkFE5Vox9PZIRsvzxqBcnG87wC0/view?usp=drive_link" target="_blank" style="text-decoration: none;">
-  <div style="width: 320px; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'">
-    <div style="font-size: 32px; margin-bottom: 8px;">▶️</div>
-    <div style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 4px;">Platform Overview</div>
-    <div style="color: rgba(255,255,255,0.8); font-size: 12px;">Click to watch</div>
+  <div style="width: 240px; height: 135px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 3px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'">
+    <div style="font-size: 24px; margin-bottom: 6px;">▶️</div>
+    <div style="color: white; font-size: 12px; font-weight: 600; margin-bottom: 2px;">Platform Overview</div>
+    <div style="color: rgba(255,255,255,0.8); font-size: 10px;">Click to watch</div>
   </div>
 </a>
 
 *Platform overview and feature demonstration*
-
-</div>
 
 ## Key Features
 
