@@ -10,7 +10,7 @@
 ### 🎥 **Platform Overview Video**
 
 <a href="https://drive.google.com/file/d/15FWKfDkFE5Vox9PZIRsvzxqBcnG87wC0/view?usp=drive_link" target="_blank">
-  <img src="https://via.placeholder.com/240x135/667eea/ffffff?text=🎥+Platform+Overview" alt="Ultra Arena Platform Overview Video" width="240" height="135" style="border-radius: 8px; border: 2px solid #667eea;">
+  <img src="https://drive.google.com/thumbnail?id=1XJU5sVSkWfieQh9JDl1HcjlGAhaKSgE6&sz=w640" alt="Ultra Arena Platform Overview Video" width="240" height="135" style="border-radius: 8px; border: 2px solid #667eea;">
 </a>
 
 ## Key Features
