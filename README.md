@@ -7,6 +7,16 @@
 • 📈 **Measures** performance, cost, and quality metrics systematically  
 • 🤖 **Functions as an intelligent agent** - can be configured to automatically execute tasks using the best-performing strategy based on evaluation results
 
+### 🎥 **Platform Overview Video**
+
+<div align="center">
+
+[![Ultra Arena Platform Demo](https://img.shields.io/badge/🎥%20Watch%20Demo-Platform%20Overview-blue?style=for-the-badge&logo=video)](https://drive.google.com/file/d/15FWKfDkFE5Vox9PZIRsvzxqBcnG87wC0/view?usp=drive_link)
+
+*Click above to watch the Ultra Arena platform demonstration*
+
+</div>
+
 ## Key Features
 
 - **Multi-Provider Support**: Evaluate well-known LLM providers including cloud-based and locally hosted models
