@@ -17,8 +17,6 @@
   </div>
 </a>
 
-*Platform overview and feature demonstration*
-
 ## Key Features
 
 - **Multi-Provider Support**: Evaluate well-known LLM providers including cloud-based and locally hosted models
