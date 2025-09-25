@@ -261,44 +261,6 @@ graph LR
 - **Reduced API Overhead**: Fewer API calls mean less network latency and setup time
 - **Cost Efficiency**: Batch processing reduces per-request costs and improves token utilization
 
-### File Grouping Intelligence
-
-The system employs sophisticated algorithms to determine optimal file groupings:
-
-```mermaid
-flowchart TD
-    A[Input Files] --> B[File Analysis]
-    B --> C{File Size Check}
-    C -->|Small Files| D[Group by Count]
-    C -->|Large Files| E[Group by Size]
-    C -->|Mixed Sizes| F[Hybrid Grouping]
-    
-    D --> G[Max Files per Group]
-    E --> H[Max Tokens per Group]
-    F --> I[Optimized Distribution]
-    
-    G --> J[Provider Limit Check]
-    H --> J
-    I --> J
-    
-    J --> K{Within Limits?}
-    K -->|Yes| L[Create Group]
-    K -->|No| M[Split Group]
-    
-    L --> N[Schedule Processing]
-    M --> D
-    M --> E
-    M --> F
-    
-    N --> O[Concurrent Execution]
-```
-
-**Grouping Algorithms**:
-
-1. **Size-Based Grouping**: Groups files by total size to optimize token usage
-2. **Count-Based Grouping**: Groups files by count to maximize batch efficiency
-3. **Hybrid Grouping**: Combines size and count considerations for optimal performance
-4. **Provider-Aware Grouping**: Adjusts groupings based on specific provider limitations
 
 ### Performance Impact
 
