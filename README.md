@@ -163,57 +163,44 @@ Ultra Arena implements a sophisticated multi-level parallelization system that d
 
 ### Dual-Level Parallelization System
 
-The platform employs two distinct levels of parallelization that work together to maximize throughput and resource utilization:
+Ultra Arena uses **two levels of parallelization** that work together to dramatically speed up document processing:
+
+**Level 1: Strategy-Level Parallelization** - Run multiple LLM strategies at the same time
+**Level 2: File-Level Parallelization** - Group multiple files into single requests
 
 ```mermaid
 graph TB
-    subgraph "Level 1: Strategy-Level Parallelization"
-        A[Strategy 1: Gemini Direct File]
-        B[Strategy 2: Claude Text First]
-        C[Strategy 3: GPT Image First]
-        D[Strategy 4: DeepSeek Hybrid]
+    subgraph "Level 1: Multiple Strategies Run Simultaneously"
+        A[Gemini Strategy]
+        B[Claude Strategy] 
+        C[GPT Strategy]
     end
     
-    subgraph "Level 2: File-Level Parallelization"
-        E[File Group 1<br/>Files 1-5]
-        F[File Group 2<br/>Files 6-10]
-        G[File Group 3<br/>Files 11-15]
-        H[File Group 4<br/>Files 16-20]
+    subgraph "Level 2: Multiple Files per Request"
+        D[5 Files → 1 Request]
+        E[5 Files → 1 Request]
+        F[5 Files → 1 Request]
     end
     
-    subgraph "File Grouping Intelligence"
-        I[Smart Batching]
-        J[Size Optimization]
-        K[Token Management]
-        L[Provider Limits]
+    subgraph "Result: Maximum Efficiency"
+        G[3x Fewer API Calls]
+        H[3x Faster Processing]
+        I[Lower Costs]
     end
     
-    subgraph "Concurrent Execution"
-        M[ThreadPool Executor]
-        N[Async Processing]
-        O[Resource Pooling]
-        P[Load Balancing]
-    end
-    
-    A --> E
-    A --> F
-    B --> G
-    B --> H
-    C --> E
+    A --> D
+    B --> E
     C --> F
+    
     D --> G
-    D --> H
-    
-    I --> E
-    J --> F
-    K --> G
-    L --> H
-    
-    E --> M
-    F --> N
-    G --> O
-    H --> P
+    E --> H
+    F --> I
 ```
+
+**How it works:**
+- **Strategy-Level**: Instead of testing one LLM provider at a time, we test Gemini, Claude, and GPT simultaneously
+- **File-Level**: Instead of sending 1 file per API call, we group 5 files into 1 API call
+- **Combined Effect**: Process 15 files (3 strategies × 5 files each) with just 3 API calls instead of 15
 
 ### Intelligent File Grouping
 
